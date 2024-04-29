@@ -10,4 +10,4 @@ C'est tout naturellement quand je suis tombé sur ce concour sur Kaggle que je m
 
 ## Déroulement du projet
 ### Analyse des données
-Le fichier [a relative link](other_file.md)
+Le fichier [a relative link](model/model.ipynb)
