@@ -1,0 +1,320 @@
+body {
+    background-image: url("background.png");
+    background-position-x: center;
+    background-repeat: no-repeat;
+    font-family:
+        comic sans ms,
+        sans-serif;
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(100, 149, 237, 0.9); /* Bleu moyen */
+    background-color: rgba(
+        248,
+        200,
+        110,
+        0.8
+    ); /* Bleu ciel légèrement transparent */
+}
+
+.container h1 {
+    text-align: center;
+    color: rgba(32, 54, 106, 1); /* Bleu foncé pokemon */
+    font-family: comic sans ms;
+    text-shadow:
+        -2px -2px 0 #ffffff,
+        2px -2px 0 #ffffff,
+        -2px 2px 0 #ffffff,
+        2px 2px 0 #ffffff;
+}
+
+.footer {
+    height: 300px;
+}
+
+.dataForm {
+    display: flex;
+    flex-direction: column; /* pour empiler les éléments verticalement */
+}
+
+.dataForm-Top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dataForm-Left,
+.dataForm-Right {
+    flex: 1; /* Cela permettra aux éléments de gauche et de droite de prendre le même espace */
+    display: flex;
+    flex-direction: column; /* pour empiler les titres, labels et inputs verticalement */
+    align-items: center; /* pour centrer les éléments horizontalement */
+}
+
+.dataForm-Center {
+    max-width: 50px; /* Limite la largeur au maximum souhaité */
+    display: flex;
+    align-items: center; /* centre l'image verticalement */
+    justify-content: center; /* centre l'image horizontalement */
+}
+
+.dataForm-Middle {
+    display: flex;
+    justify-content: center; /* pour centrer le bouton horizontalement */
+}
+
+.dataForm-Bottom {
+    display: flex;
+    justify-content: center; /* pour centrer le bouton horizontalement */
+}
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+.button-pokemon {
+    background-color: #e17055; /* Couleur jaune de Pokémon */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: center;
+    box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    color: white; /* Bleu Pokémon */
+}
+
+.button-pokemon:hover {
+    background-color: #d63031; /* Jaune foncé pour le hover */
+}
+
+.button-pokemon:active {
+    transform: translateY(2px);
+}
+
+#pokemonImage1,
+#pokemonImage2 {
+    width: 250px;
+}
+
+.pourcent-value {
+    font-size: 20px;
+}
+
+#poke-winner {
+    font-size: 40px;
+}
+
+/* BAR DE NAVIGATION */
+.nav-container {
+    width: 800px;
+    margin: 0 auto;
+    padding: 0 25px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    background-color: rgba(59, 115, 181, 1); /* Bleu clair pokemon */
+    border-radius: 20px;
+}
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    border-radius: 20px;
+}
+
+nav li {
+    float: left; /* Disposition horizontale des éléments de la liste */
+}
+
+nav li a {
+    display: block; /* Les liens remplissent complètement le bloc li */
+    color: white; /* Couleur du texte des liens */
+    text-align: center; /* Centre le texte des liens */
+    padding: 14px 16px; /* Ajoute du padding autour des liens */
+    text-decoration: none; /* Supprime le soulignement par défaut des liens */
+}
+
+/* Change la couleur des liens au survol */
+nav li a:hover {
+    background-color: rgba(32, 54, 106, 1); /* Bleu foncé pokemon */
+    border-radius: 20px;
+}
+
+/* Style général du tableau */
+table {
+    width: 60%; /* Réduction de la largeur à 60% */
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 14px; /* Taille de police réduite */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* En-têtes du tableau */
+th {
+    background-color: #f2c94c; /* Jaune Pokémon */
+    color: #333;
+    font-weight: bold;
+    padding: 8px 16px; /* Padding réduit */
+    text-transform: uppercase;
+}
+
+/* Cellules du tableau */
+td {
+    background-color: #ffeaa7; /* Jaune clair */
+    padding: 8px 16px; /* Padding réduit */
+    color: #333;
+    border-bottom: 1px solid #f2c94c;
+}
+
+/* Survol des lignes */
+tr:hover {
+    background-color: #ffdb58; /* Jaune légèrement plus foncé pour le survol */
+}
+
+/* Styles pour les menus déroulants */
+select {
+    font-size: 16px; /* Ajuster selon la taille souhaitée */
+    padding: 10px; /* Espace intérieur pour rendre le select plus grand */
+    width: 250px; /* Largeur du select pour afficher les noms plus longs */
+    border: 1px solid #ddd; /* Bordure subtile */
+    border-radius: 5px; /* Bords arrondis pour un look moderne */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre pour un effet "elevé" */
+    background-color: #f9f9f9; /* Fond clair */
+    color: #333; /* Couleur du texte */
+    appearance: none; /* Supprimer l'apparence par défaut pour certains navigateurs */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer; /* Change le curseur en main quand on survole le select */
+}
+
+/* Styles pour l'icône de flèche déroulante (si vous avez une icône personnalisée) */
+select::after {
+    content: "▼"; /* Vous pouvez remplacer par votre propre icône si nécessaire */
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* S'assurer que l'icône ne bloque pas les clics */
+}
+
+/* Styles pour le hover et focus pour une meilleure interactivité */
+select:hover,
+select:focus {
+    border-color: #aaa;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ********************
+   POKE TYPE 1 & 2
+********************** */
+.poke-type {
+    display: flex; /* Ceci alignera les enfants div en ligne */
+    gap: 5px; /* Ceci ajoutera un espace entre les enfants div */
+    color: #fff;
+    font-weight: bold;
+    margin: 2px;
+    font-size: 0.8em;
+    text-align: center;
+    width: 60px; /* or whatever width you prefer */
+}
+
+#poke1-type1,
+#poke2-type1,
+#poke1-type2,
+#poke2-type2 {
+    padding: 5px 10px;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.no_type_2,
+.type-none {
+    background-color: #fff;
+    color: #000;
+    border-radius: 5px;
+}
+
+.type-poison {
+    background-color: #a040a0;
+}
+
+.type-flying {
+    background-color: #a890f0;
+}
+
+.type-dragon {
+    background-color: #7038f8;
+}
+
+.type-ground {
+    background-color: #e0c068;
+}
+
+.type-fairy {
+    background-color: #ee99ac;
+}
+
+.type-grass {
+    background-color: #78c850;
+}
+
+.type-fighting {
+    background-color: #c03028;
+}
+
+.type-psychic {
+    background-color: #f85888;
+}
+
+.type-steel {
+    background-color: #b8b8d0;
+}
+
+.type-ice {
+    background-color: #98d8d8;
+}
+
+.type-rock {
+    background-color: #b8a038;
+}
+
+.type-dark {
+    background-color: #705848;
+}
+
+.type-water {
+    background-color: #6890f0;
+}
+
+.type-electric {
+    background-color: #f8d030;
+}
+
+.type-fire {
+    background-color: #f08030;
+}
+
+.type-ghost {
+    background-color: #705898;
+}
+
+.type-bug {
+    background-color: #a8b820;
+}
+
+.type-normal {
+    background-color: #a8a878;
+}
