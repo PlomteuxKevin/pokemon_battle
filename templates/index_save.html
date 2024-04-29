@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pokerate</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+    </head>
+    <body>
+        <center>
+            <img
+                src="{{ url_for('static', filename='logo.png') }}"
+                width="800"
+            />
+        </center>
+        <br /><br /><br />
+        <nav class="nav-container">
+            <ul>
+                <li><a href="index">Home</a></li>
+                <li><a href="byPokemon">by Pokémon</a></li>
+                <li><a href="byTeam">by Team</a></li>
+            </ul>
+        </nav>
+        <br /><br />
+        <div class="container">
+            <form id="dataForm">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required />
+
+                <label for="bmi">BMI (Indice de masse corporelle):</label>
+                <input type="number" id="bmi" name="bmi" step="0.01" required />
+
+                <label for="classe">Classe:</label>
+                <input type="number" id="classe" name="classe" required />
+
+                <label for="sexe">Sexe:</label>
+                <select id="sexe" name="sexe" required>
+                    <option value="homme">Homme</option>
+                    <option value="femme">Femme</option>
+                </select>
+
+                <button type="button" onclick="sendData()">Envoyer</button>
+            </form>
+        </div>
+
+        <script>
+            async function sendData() {
+                const formData = new FormData(
+                    document.getElementById("dataForm"),
+                );
+                const response = await fetch("/model_predict", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.status === 200) {
+                    alert("Données envoyées avec succès!");
+                } else {
+                    alert("Erreur lors de l'envoi des données.");
+                }
+            }
+        </script>
+    </body>
+</html>

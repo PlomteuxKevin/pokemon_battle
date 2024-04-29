@@ -1,0 +1,206 @@
+{% extends "base.html" %} {% block title %} by Pokémon {% endblock %} {% block
+content %}
+
+<h1>WINNER by Pokémon</h1>
+<form class="dataForm">
+    <div class="dataForm-Top">
+        <div class="dataForm-Left">
+            <h3>Opponent Pokémon</h3>
+            <select id="pokemon-liste-1" required /></select>
+            <div class="pourcent-value" id="pourcent-poke1"></div>
+            <img id="pokemonImage1" src="" alt="Image du Pokémon">
+            <table id="stats-poke1">
+                <tr>
+                    <th>HP</th>
+                    <th>Atk.</th>
+                    <th>Def.</th>
+                    <th>Sp. Atk</th>
+                    <th>Sp. Def</th>
+                    <th>Speed</th>
+                    <th>Gen.</th>
+                    <th>Leg.</th>
+                </tr>
+                <tr>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                </tr>
+            </table>
+            <div class="poke-type">
+                <div class="type-none" id="poke1-type1">-</div>
+                <div class="type-none" id="poke1-type2">-</div>
+            </div>
+        </div>
+        <div class="dataForm-Center">
+            <img src="{{ url_for('static', filename='vs.png') }}" width="100" />
+        </div>
+        <div class="dataForm-Right">
+            <h3>Your Pokémon</h3>
+            <select id="pokemon-liste-2" required /></select>
+            <div class="pourcent-value" id="pourcent-poke2"></div>
+            <img id="pokemonImage2" src="" alt="Image du Pokémon">
+            <table id="stats-poke2">
+                <tr>
+                    <th>HP</th>
+                    <th>Atk.</th>
+                    <th>Def.</th>
+                    <th>Sp. Atk</th>
+                    <th>Sp. Def</th>
+                    <th>Speed</th>
+                    <th>Gen.</th>
+                    <th>Leg.</th>
+                </tr>
+                <tr>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                    <td class="statValue">-</td>
+                </tr>
+            </table>
+            <div class="poke-type">
+                <div class="type-none" id="poke2-type1">-</div>
+                <div class="type-none" id="poke2-type2">-</div>
+            </div>
+        </div>
+    </div>
+    <div class="dataForm-Middle" id="poke-winner"></div>
+    <div class="dataForm-Bottom">
+        <button type="button" onclick="fight_byPkemon(event)" class="button-pokemon">
+            Fight !
+        </button>
+    </div>
+</form>
+
+<script>
+
+  fetch('/pokedex')
+    .then(response => response.json())
+    .then(data => {
+        populateDropdowns(data);
+        loadImages()
+    })
+
+
+  function loadImages() {
+      let pokemonName1 = document.getElementById('pokemon-liste-1').value.split(' - ')[1];
+      let pokemonName2 = document.getElementById('pokemon-liste-2').value.split(' - ')[1];
+
+      let imageUrl = `static/Poke_img_Dataset/${pokemonName1}.png`;
+      document.getElementById("pokemonImage1").src = imageUrl;
+
+      imageUrl = `static/Poke_img_Dataset/${pokemonName2}.png`;
+      document.getElementById("pokemonImage2").src = imageUrl;
+
+      loadStats();
+  }
+
+  function loadStats() {
+      let pokemonIndex1 = document.getElementById('pokemon-liste-1').value.split(' - ')[0];
+      let pokemonIndex2 = document.getElementById('pokemon-liste-2').value.split(' - ')[0];
+
+      Promise.all([
+          fetch(`/pokemonStats?index=${pokemonIndex1}`),
+          fetch(`/pokemonStats?index=${pokemonIndex2}`)
+      ])
+      .then(responses => Promise.all(responses.map(r => r.json())))
+      .then(statsData => {
+          populateStats(statsData[0], statsData[1]);
+      });
+  }
+
+  function populateDropdowns(data) {
+      const dropdown1 = document.getElementById('pokemon-liste-1');
+      const dropdown2 = document.getElementById('pokemon-liste-2');
+
+      data.forEach(pokemon => {
+          const option = new Option(pokemon, pokemon);
+          dropdown1.add(option.cloneNode(true));
+          dropdown2.add(option.cloneNode(true));
+      });
+  }
+
+  function populateStats(stats1, stats2) {
+      // Sélection des éléments du DOM pour le premier Pokémon
+      let statsTable1 = document.getElementById('stats-poke1');
+      let statsRows1 = statsTable1.querySelectorAll('td.statValue');
+
+      // Sélection des éléments du DOM pour le deuxième Pokémon
+      let statsTable2 = document.getElementById('stats-poke2');
+      let statsRows2 = statsTable2.querySelectorAll('td.statValue');
+
+      // Fonction pour remplir un tableau avec des statistiques
+      function fillTable(stats, rows) {
+          rows[0].textContent = stats['HP'];
+          rows[1].textContent = stats['Attack'];
+          rows[2].textContent = stats['Defense'];
+          rows[3].textContent = stats['Sp. Atk'];
+          rows[4].textContent = stats['Sp. Def'];
+          rows[5].textContent = stats['Speed'];
+          rows[6].textContent = stats['Generation'];
+          rows[7].textContent = stats['Legendary'] ? 'Yes' : 'No';
+      }
+
+      // Remplir les tableaux avec les données
+      fillTable(stats1, statsRows1);
+      fillTable(stats2, statsRows2);
+
+      // Mettre à jour les éléments de type pour le premier Pokémon
+      updateTypeDisplay('poke1-type1', stats1['Type 1']);
+      updateTypeDisplay('poke1-type2', stats1['Type 2']);
+
+      // Mettre à jour les éléments de type pour le deuxième Pokémon
+      updateTypeDisplay('poke2-type1', stats2['Type 1']);
+      updateTypeDisplay('poke2-type2', stats2['Type 2']);
+  }
+
+  function updateTypeDisplay(typeElementId, type) {
+      const typeElement = document.getElementById(typeElementId);
+      typeElement.textContent = type !== 'no_type_2' ? type : '-';
+      typeElement.className = ''; // Réinitialiser le nom de la classe
+      typeElement.classList.add('type'); // Ajouter la classe de base 'type'
+      // Ajouter la classe correspondante au type, ou 'type-none' si 'no_type_2'
+      typeElement.classList.add(type !== 'no_type_2' ? `type-${type.toLowerCase()}` : 'type-none');
+  }
+
+
+  function fight_byPkemon(event) {
+      event.preventDefault();
+
+      const pokemon1 = document.getElementById('pokemon-liste-1').value;
+      const pokemon2 = document.getElementById('pokemon-liste-2').value;
+
+      fetch('/byPokemon', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              pokemon1: pokemon1,
+              pokemon2: pokemon2,
+          }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data)
+          // Here you update the HTML with the response
+          document.getElementById('pourcent-poke1').innerHTML = `Chance to win: ${data.poke1_proba*100}%`;
+          document.getElementById('pourcent-poke2').innerHTML = `Chance to win: ${data.poke2_proba*100}%`;
+          document.getElementById('poke-winner').innerHTML = `Winner: ${data.winner_name} !`;
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  document.getElementById('pokemon-liste-1').addEventListener('change', loadImages);
+  document.getElementById('pokemon-liste-2').addEventListener('change', loadImages);
+
+</script>
+{% endblock %}
