@@ -1,5 +1,5 @@
 # pokemon_battle
-Prédiction du vainqueur lors d'une bataille Pokemon avec SkLearn.<br />
+Prédiction du vainqueur lors d'une bataille Pokemon avec SkLearn.<br /><br />
 <img width="1286" alt="Capture d’écran 2024-04-29 à 12 04 59" src="https://github.com/PlomteuxKevin/pokemon_battle/assets/168406292/5860e082-a56b-4721-acf6-f8c8bd1cdad1">
 
 
